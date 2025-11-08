@@ -13,6 +13,9 @@ Current status, completed features, and roadmap for the Lime Tray Todo App.
 - [x] Local storage persistence
 - [x] Theme switching (Light/Dark)
 - [x] Task statistics display
+- [x] Task details modal with bottom-sheet animation
+- [x] Completion time tracking
+- [x] Time taken display in task list
 
 ### UI/UX
 - [x] Responsive design
@@ -22,6 +25,9 @@ Current status, completed features, and roadmap for the Lime Tray Todo App.
 - [x] Empty state handling
 - [x] Loading states
 - [x] Error handling
+- [x] Bottom-sheet modal animation
+- [x] Mobile-first modal design
+- [x] Task completion time indicators
 
 ### Technical
 - [x] TypeScript implementation

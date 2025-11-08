@@ -63,6 +63,17 @@ App
   - Syncs with localStorage
   - Displays task statistics
   - Theme management
+  - Manages task details modal state
+  - Formats and displays completion time
+
+#### **TaskDetailsModal.tsx**
+- **Purpose**: Task details bottom-sheet modal
+- **Responsibilities**:
+  - Displays comprehensive task information
+  - Shows completion time and duration
+  - Handles task deletion from modal
+  - Provides smooth slide-up animation
+  - Responsive design for mobile and desktop
 
 #### **TaskForm.tsx**
 - **Purpose**: Task creation form

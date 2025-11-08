@@ -10,6 +10,8 @@ A modern, feature-rich task management application built with React, TypeScript,
 ## ✨ Features
 
 - ✅ **Task Management**: Create, edit, delete, and toggle task completion
+- 📱 **Task Details Modal**: Click any task to view detailed information with smooth bottom-sheet animation
+- ⏱️ **Completion Time Tracking**: Automatically tracks and displays time taken to complete tasks
 - 🎨 **Dark/Light Theme**: Seamless theme switching with persistent preferences
 - 📋 **Smart Filtering**: Filter tasks by All, Pending, or Completed
 - 🎯 **Drag & Drop**: Reorder tasks with intuitive drag-and-drop functionality
@@ -82,18 +84,19 @@ npm run dev
 
 ```
 src/
-├── components/          # React components
-│   ├── TaskManager.tsx  # Main task management component
-│   └── TaskForm.tsx     # Task creation form
-├── pages/               # Page components
-│   └── About.tsx        # About page
-├── store/               # State management
-│   └── taskStore.ts     # Zustand store for tasks
-├── hooks/               # Custom React hooks
-│   └── useLocalStorage.ts # LocalStorage hook
-├── App.tsx              # Main app component
-├── main.tsx             # Application entry point
-└── index.css            # Global styles
+├── components/              # React components
+│   ├── TaskManager.tsx      # Main task management component
+│   ├── TaskForm.tsx         # Task creation form
+│   └── TaskDetailsModal.tsx # Task details modal (bottom sheet)
+├── pages/                   # Page components
+│   └── About.tsx            # About page
+├── store/                   # State management
+│   └── taskStore.ts         # Zustand store for tasks
+├── hooks/                   # Custom React hooks
+│   └── useLocalStorage.ts   # LocalStorage hook
+├── App.tsx                  # Main app component
+├── main.tsx                 # Application entry point
+└── index.css                # Global styles
 ```
 
 ## 🎯 Key Features Explained
@@ -103,6 +106,15 @@ src/
 - Mark tasks as complete/incomplete
 - Delete tasks with confirmation
 - Real-time task statistics
+- Click any task to view detailed information in a beautiful modal
+
+### Task Details Modal
+- **Bottom Sheet Animation**: Smooth slide-up animation from bottom (mobile-first design)
+- **Completion Tracking**: Shows when task was created and completed
+- **Time Taken**: Displays duration from creation to completion
+- **Task Information**: View task status, creation date, completion date, and task ID
+- **Quick Actions**: Delete task directly from modal
+- **Responsive**: Adapts beautifully to mobile and desktop screens
 
 ### Theme System
 - Toggle between light and dark themes
@@ -118,6 +130,13 @@ src/
 - Automatic task persistence
 - No data loss on page refresh
 - Efficient sync mechanism
+- Completion timestamps are preserved
+
+### Completion Time Tracking
+- Automatically tracks when tasks are completed
+- Displays time taken in task list for completed tasks
+- Shows detailed completion information in modal
+- Updates correctly when tasks are uncompleted and re-completed
 
 ## 📚 Documentation
 

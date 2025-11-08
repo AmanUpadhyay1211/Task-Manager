@@ -366,10 +366,53 @@ pnpm build && ls -lh dist
 
 ---
 
-**Total Issues Resolved**: 10
+## 🟡 Additional Issues Fixed
+
+### 11. React Beautiful DnD isCombineEnabled Error
+
+**Issue**: Console error about `isCombineEnabled must be a boolean`.
+
+**Error Message**:
+```
+Invariant failed: isCombineEnabled must be a boolean
+```
+
+**Root Cause**:
+- Missing `isCombineEnabled` prop on `Droppable` component
+- react-beautiful-dnd requires explicit boolean value for this prop
+
+**Solution**:
+```tsx
+<Droppable droppableId="tasks" isDropDisabled={false} isCombineEnabled={false}>
+  {/* ... */}
+</Droppable>
+```
+
+**Status**: ✅ Resolved
+
+---
+
+### 12. Completion Time Not Showing for Old Tasks
+
+**Issue**: Tasks completed before `completedAt` field was added don't show completion time.
+
+**Root Cause**:
+- Old tasks in localStorage don't have `completedAt` timestamp
+- Modal only showed completion info if `completedAt` exists
+
+**Solution**:
+- Updated modal to show completion status even without timestamp
+- Added helpful message for old completed tasks
+- New completions automatically get timestamp
+
+**Status**: ✅ Resolved
+
+---
+
+**Total Issues Resolved**: 12
 **Critical Issues**: 3
-**Medium Priority**: 4
-**Low Priority**: 3
+**Medium Priority**: 5
+**Low Priority**: 4
 
 **Last Updated**: Current Date
 
