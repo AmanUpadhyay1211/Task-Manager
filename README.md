@@ -1,73 +1,148 @@
-# React + TypeScript + Vite
+# 🍋 Lime Tray - Advanced Todo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, feature-rich task management application built with React, TypeScript, and cutting-edge web technologies. This app demonstrates best practices in React development, state management, and user experience design.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19.1.1-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?logo=typescript)
+![Vite](https://img.shields.io/badge/Vite-7.1.7-646CFF?logo=vite)
+![Zustand](https://img.shields.io/badge/Zustand-5.0.8-FF6B6B)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- ✅ **Task Management**: Create, edit, delete, and toggle task completion
+- 🎨 **Dark/Light Theme**: Seamless theme switching with persistent preferences
+- 📋 **Smart Filtering**: Filter tasks by All, Pending, or Completed
+- 🎯 **Drag & Drop**: Reorder tasks with intuitive drag-and-drop functionality
+- 💾 **Local Storage**: Automatic persistence of tasks and preferences
+- 🎭 **Smooth Animations**: Beautiful transitions powered by Framer Motion
+- 📱 **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
+- 🔍 **Scrollable Task List**: Fixed-height container with custom scrollbar
+- 📊 **Task Statistics**: Real-time stats showing total, completed, and pending tasks
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Quick Start
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js 18+ or higher
+- pnpm (recommended) or npm/yarn
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd "Lime Tray : Todo App"
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Install dependencies:
+```bash
+pnpm install
+# or
+npm install
 ```
+
+3. Start the development server:
+```bash
+pnpm dev
+# or
+npm run dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## 📜 Available Scripts
+
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm lint` - Run ESLint
+
+## 🛠️ Tech Stack
+
+### Core
+- **React 19.1.1** - Modern React with latest features
+- **TypeScript 5.9.3** - Type-safe development
+- **Vite 7.1.7** - Lightning-fast build tool
+
+### State Management
+- **Zustand 5.0.8** - Lightweight state management
+
+### UI & Styling
+- **Tailwind CSS 4.1.17** - Utility-first CSS framework
+- **Framer Motion 12.23.24** - Animation library
+- **Lucide React** - Beautiful icon library
+
+### Routing
+- **React Router DOM 7.9.5** - Client-side routing
+
+### Drag & Drop
+- **React Beautiful DnD 13.1.1** - Drag and drop functionality
+
+## 📁 Project Structure
+
+```
+src/
+├── components/          # React components
+│   ├── TaskManager.tsx  # Main task management component
+│   └── TaskForm.tsx     # Task creation form
+├── pages/               # Page components
+│   └── About.tsx        # About page
+├── store/               # State management
+│   └── taskStore.ts     # Zustand store for tasks
+├── hooks/               # Custom React hooks
+│   └── useLocalStorage.ts # LocalStorage hook
+├── App.tsx              # Main app component
+├── main.tsx             # Application entry point
+└── index.css            # Global styles
+```
+
+## 🎯 Key Features Explained
+
+### Task Management
+- Add new tasks with validation (minimum 3 characters)
+- Mark tasks as complete/incomplete
+- Delete tasks with confirmation
+- Real-time task statistics
+
+### Theme System
+- Toggle between light and dark themes
+- Theme preference persists across sessions
+- Smooth theme transitions
+
+### Drag & Drop
+- Reorder tasks by dragging
+- Works correctly with filtered views
+- Visual feedback during dragging
+
+### Local Storage
+- Automatic task persistence
+- No data loss on page refresh
+- Efficient sync mechanism
+
+## 📚 Documentation
+
+For more detailed information, see:
+
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Project architecture and design decisions
+- [STATUS.md](./STATUS.md) - Current project status and roadmap
+- [ISSUES.md](./ISSUES.md) - Issues encountered and solutions
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+## 👤 Author
+
+**Aman Upadhyay**
+
+- GitHub: [@AmanUpadhyay1211](https://github.com/AmanUpadhyay1211)
+- LinkedIn: [allthingsaman](https://linkedin.com/in/allthingsaman)
+- Email: amanupadhyay1211@gmail.com
+
+---
+
+Built with ❤️ using React, TypeScript, and modern web technologies.
