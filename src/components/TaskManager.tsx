@@ -1,14 +1,17 @@
-import { useEffect, useCallback, useMemo, useRef } from 'react';
+import { useEffect, useCallback, useMemo, useRef, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Trash2, Sun, Moon } from 'lucide-react';
-import useTaskStore, { type FilterType } from '../store/taskStore';
+import useTaskStore, { type FilterType, type Task } from '../store/taskStore';
 import useLocalStorage from '../hooks/useLocalStorage';
 import TaskForm from './TaskForm';
+import TaskDetailsModal from './TaskDetailsModal';
 
 const TaskManager = () => {
   const { tasks, filter, theme, setTasks, toggleTask, deleteTask, setFilter, toggleTheme, reorderTasks } = useTaskStore();
   const [storedTasks, setStoredTasks] = useLocalStorage('tasks', []);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isInitialLoad = useRef(true);
   const isInitialized = useRef(false);
 
@@ -67,12 +70,35 @@ const TaskManager = () => {
     [reorderTasks, filteredTasks, tasks]
   );
 
+  const handleTaskClick = useCallback((task: Task) => {
+    setSelectedTask(task);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedTask(null);
+  }, []);
+
   const stats = useMemo(() => {
     const total = tasks.length;
     const completed = tasks.filter((t) => t.completed).length;
     const pending = total - completed;
     return { total, completed, pending };
   }, [tasks]);
+
+  const formatDuration = useCallback((startTime: number, endTime: number) => {
+    const diff = endTime - startTime;
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) return `${days}d ${hours % 24}h`;
+    if (hours > 0) return `${hours}h ${minutes % 60}m`;
+    if (minutes > 0) return `${minutes}m`;
+    return `${seconds}s`;
+  }, []);
 
   return (
     <div className="task-manager">
@@ -117,7 +143,7 @@ const TaskManager = () => {
           </div>
 
           <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="tasks" isDropDisabled={false}>
+            <Droppable droppableId="tasks" isDropDisabled={false} isCombineEnabled={false}>
               {(provided) => (
                 <div
                   className="task-list"
@@ -143,18 +169,35 @@ const TaskManager = () => {
                               snapshot.isDragging ? 'dragging' : ''
                             }`}
                           >
-                            <div className="task-content">
+                            <div 
+                              className="task-content"
+                              onClick={() => handleTaskClick(task)}
+                              style={{ cursor: 'pointer', flex: 1 }}
+                            >
                               <button
-                                onClick={() => toggleTask(task.id)}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleTask(task.id);
+                                }}
                                 className="checkbox"
                                 aria-label="Toggle task"
                               >
                                 {task.completed && <Check size={16} />}
                               </button>
-                              <span className="task-title">{task.title}</span>
+                              <div className="task-title-wrapper">
+                                <span className="task-title">{task.title}</span>
+                                {task.completed && task.completedAt && (
+                                  <span className="task-completion-time">
+                                    Completed in {formatDuration(task.createdAt, task.completedAt)}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                             <button
-                              onClick={() => deleteTask(task.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteTask(task.id);
+                              }}
                               className="delete-btn"
                               aria-label="Delete task"
                             >
@@ -178,6 +221,14 @@ const TaskManager = () => {
           )}
         </div>
       </main>
+
+      {/* Task Details Modal */}
+      <TaskDetailsModal
+        task={selectedTask}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onDelete={deleteTask}
+      />
     </div>
   );
 };

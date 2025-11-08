@@ -5,6 +5,7 @@ export interface Task {
   title: string;
   completed: boolean;
   createdAt: number;
+  completedAt?: number;
 }
 
 export type FilterType = 'all' | 'completed' | 'pending';
@@ -41,9 +42,17 @@ const useTaskStore = create<TaskState>((set) => ({
     })),
   toggleTask: (id) =>
     set((state) => ({
-      tasks: state.tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      ),
+      tasks: state.tasks.map((task) => {
+        if (task.id === id) {
+          const isCompleting = !task.completed;
+          return {
+            ...task,
+            completed: isCompleting,
+            completedAt: isCompleting ? Date.now() : undefined,
+          };
+        }
+        return task;
+      }),
     })),
   deleteTask: (id) =>
     set((state) => ({
