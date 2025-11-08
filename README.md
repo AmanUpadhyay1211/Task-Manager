@@ -32,8 +32,8 @@ A modern, feature-rich task management application built with React, TypeScript,
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd "Lime Tray : Todo App"
+git clone <https://github.com/AmanUpadhyay1211/Task-Manager.git>
+cd "Task Manager"
 ```
 
 2. Install dependencies:
