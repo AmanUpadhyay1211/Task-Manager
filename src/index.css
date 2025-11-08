@@ -475,6 +475,7 @@ body.dark {
   justify-content: center;
   margin: 0 auto 1.5rem;
   box-shadow: 0 8px 24px var(--shadow-lg);
+  border-color: var(--border);
 }
 
 .avatar-text {
