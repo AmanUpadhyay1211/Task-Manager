@@ -49,18 +49,23 @@ const TaskManager = () => {
   const handleDragEnd = useCallback(
     (result: { destination: { index: number } | null; source: { index: number } }) => {
       if (!result.destination) return;
-      reorderTasks(result.source.index, result.destination.index);
+      
+      // Map filtered indices to actual task indices
+      const sourceTask = filteredTasks[result.source.index];
+      const destTask = filteredTasks[result.destination.index];
+      
+      if (!sourceTask || !destTask) return;
+      
+      // Find actual indices in the full tasks array
+      const sourceIndex = tasks.findIndex((t) => t.id === sourceTask.id);
+      const destIndex = tasks.findIndex((t) => t.id === destTask.id);
+      
+      if (sourceIndex === -1 || destIndex === -1) return;
+      
+      reorderTasks(sourceIndex, destIndex);
     },
-    [reorderTasks]
+    [reorderTasks, filteredTasks, tasks]
   );
-
-  const handleToggle = useCallback((id: string) => {
-    toggleTask(id);
-  }, [toggleTask]);
-
-  const handleDelete = useCallback((id: string) => {
-    deleteTask(id);
-  }, [deleteTask]);
 
   const stats = useMemo(() => {
     const total = tasks.length;
@@ -125,19 +130,22 @@ const TaskManager = () => {
                         {(provided, snapshot) => (
                           <motion.div
                             ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            {...(provided.draggableProps as any)}
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            {...(provided.dragHandleProps as any)}
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, x: -100 }}
                             transition={{ duration: 0.3 }}
+                            drag={false}
                             className={`task-item ${task.completed ? 'completed' : ''} ${
                               snapshot.isDragging ? 'dragging' : ''
                             }`}
                           >
                             <div className="task-content">
                               <button
-                                onClick={() => handleToggle(task.id)}
+                                onClick={() => toggleTask(task.id)}
                                 className="checkbox"
                                 aria-label="Toggle task"
                               >
@@ -146,7 +154,7 @@ const TaskManager = () => {
                               <span className="task-title">{task.title}</span>
                             </div>
                             <button
-                              onClick={() => handleDelete(task.id)}
+                              onClick={() => deleteTask(task.id)}
                               className="delete-btn"
                               aria-label="Delete task"
                             >
